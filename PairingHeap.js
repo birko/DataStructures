@@ -9,6 +9,8 @@ var DataStructures;
     /// <reference path="Tree.ts" />
     /// <reference path="BinaryTree.ts" />
     (function (Tree) {
+        "use strict";
+
         // abstract binary pairing heap node
         var AbstractPairingHeapNode = (function (_super) {
             __extends(AbstractPairingHeapNode, _super);
@@ -20,13 +22,13 @@ var DataStructures;
             };
 
             AbstractPairingHeapNode.prototype.priority = function () {
-                throw new Error('This method is abstract');
+                throw new Error("This method is abstract");
             };
 
             AbstractPairingHeapNode.prototype.compare = function (node) {
                 var thispriority = this.priority();
                 var nodepriority = node.priority();
-                if (thispriority == nodepriority) {
+                if (thispriority === nodepriority) {
                     return 0;
                 } else if (thispriority < nodepriority) {
                     return -1;
@@ -39,22 +41,23 @@ var DataStructures;
                 return _super.prototype.searchChild.call(this, node);
             };
 
-            //return the minimal node of tree
+            // return the minimal node of tree
             // swap children of nodes to  preserve the tree
-            //right subtree of rootnode is always empty in binary paring heap
+            // right subtree of rootnode is always empty in binary paring heap
             AbstractPairingHeapNode.prototype.addChild = function (node) {
                 var minNode = undefined;
+                var min_left = undefined;
                 if (this.compare(node) > 0) {
-                    var min_left = node.left;
+                    min_left = node.left; // store node.left subtree
                     node.left = this; // this is node.left subtree
                     this.right = min_left; // this.right subtree is node.left previous subtree
                     this.parent = node; // set this.parent to  node
-                    if (min_left != undefined) {
+                    if (min_left !== undefined) {
                         min_left.parent = this;
                     }
                     minNode = node;
                 } else {
-                    var min_left = this.left;
+                    min_left = this.left; // store this.left subtree
                     var max_right = node.right;
                     node.right = min_left; // node.right set to  this.left subtree
                     this.left = node; // this.left subtree set to node
@@ -80,7 +83,7 @@ var DataStructures;
                 this.root = undefined;
             }
             PairingHeap.prototype.addNode = function (node) {
-                if (this.root != undefined) {
+                if (this.root !== undefined) {
                     this.root = this.root.addChild(node);
                 } else {
                     this.root = node;
@@ -109,8 +112,8 @@ var DataStructures;
                 var result = this.root;
                 if (this.root !== undefined) {
                     this.root = result.left;
-                    if (this.root != undefined) {
-                        while (this.root.right != undefined) {
+                    if (this.root !== undefined) {
+                        while (this.root.right !== undefined) {
                             this.root = this.root.addChild(this.root.right);
                         }
                         this.root.parent = undefined;

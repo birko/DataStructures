@@ -1,5 +1,6 @@
 /// <reference path="Tree.ts" />
 module DataStructures.Tree {
+    "use strict";
     export interface IBinaryNodeInterface extends INodeInterface {
         parent: IBinaryNodeInterface;
         left: IBinaryNodeInterface;
@@ -25,12 +26,12 @@ module DataStructures.Tree {
                 0: this is equal node
                 1: this is greather than node
             */
-            throw new Error('This method is abstract');
+            throw new Error("This method is abstract");
         }
 
         addChild(node: IBinaryNodeInterface): IBinaryNodeInterface {
-            if (this.compare(node) > 0) { //node < this
-                if (this.left == undefined) {
+            if (this.compare(node) > 0) { // node < this
+                if (this.left === undefined) {
                     node.parent = this;
                     this.left = node;
                     return node;
@@ -38,7 +39,7 @@ module DataStructures.Tree {
                     return this.left.addChild(node);
                 }
             } else {
-                if (this.right == undefined) {
+                if (this.right === undefined) {
                     node.parent = this;
                     this.right = node;
                     return node;
@@ -49,8 +50,8 @@ module DataStructures.Tree {
         }
 
         searchChild(node: IBinaryNodeInterface): IBinaryNodeInterface {
-            var test = this.compare(node);
-            if (test == 0) {
+            var test:number = this.compare(node);
+            if (test === 0) {
                 return this;
             } else if (test < 0) {
                 return this.left.searchChild(node);
@@ -93,16 +94,15 @@ module DataStructures.Tree {
         }
     }
 
-    export class BinaryTree implements ITreeInterface
-    {
+    export class BinaryTree implements ITreeInterface {
         root: IBinaryNodeInterface;
 
         constructor() {
             this.root = undefined;
         }
 
-        addNode(node: IBinaryNodeInterface) {
-            if (this.root == undefined) {
+        addNode(node: IBinaryNodeInterface): ITreeInterface {
+            if (this.root === undefined) {
                 this.root = node;
             } else {
                 this.root.addChild(node);
@@ -110,17 +110,17 @@ module DataStructures.Tree {
             return this;
         }
 
-        removeNode(node: IBinaryNodeInterface) {
-            var removeNode = this.searchNode(node);
-            var children = removeNode.children();
-            var nodeLeft = children[0];
-            var nodeRight = children[1];
+        removeNode(node: IBinaryNodeInterface):INodeInterface {
+            var removeNode:INodeInterface = this.searchNode(node);
+            var children:Array<INodeInterface> = removeNode.children();
+            var nodeLeft: INodeInterface  = children[0];
+            var nodeRight: INodeInterface = children[1];
             nodeLeft.parent = removeNode.parent;
             nodeLeft.addChild(nodeRight);
             return removeNode;
         }
 
-        searchNode(node: IBinaryNodeInterface) {
+        searchNode(node: IBinaryNodeInterface):INodeInterface {
             if (this.root !== undefined) {
                 return this.root.searchChild(node);
             }
@@ -128,7 +128,7 @@ module DataStructures.Tree {
         }
 
         inOrder(): Array<INodeInterface> {
-            var result = new Array();
+            var result: Array<INodeInterface> = new Array();
             if (this.root !== undefined) {
                 result = this.root.inOrder(result);
             }
@@ -136,7 +136,7 @@ module DataStructures.Tree {
         }
 
         preOrder(): Array<INodeInterface> {
-            var result = new Array();
+            var result: Array<INodeInterface> = new Array();
             if (this.root !== undefined) {
                 result = this.root.preOrder(result);
             }
@@ -144,7 +144,7 @@ module DataStructures.Tree {
         }
 
         postOrder(): Array<INodeInterface> {
-            var result = new Array();
+            var result: Array<INodeInterface> = new Array();
             if (this.root !== undefined) {
                 result = this.root.postOrder(result);
             }

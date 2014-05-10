@@ -1,5 +1,5 @@
 module DataStructures.Tree {
-
+    "use strict";
     export interface INodeInterface {
         parent: INodeInterface;
 
@@ -11,7 +11,7 @@ module DataStructures.Tree {
         inOrder(items: Array<INodeInterface>): Array<INodeInterface>;
         preOrder(items: Array<INodeInterface>): Array<INodeInterface>;
         postOrder(items: Array<INodeInterface>): Array<INodeInterface>;
-        //leverOrder(items: any[]): any[];
+        // leverOrder(items: any[]): any[];
     }
 
     export interface IHeapNodeInterface extends INodeInterface {
@@ -27,6 +27,6 @@ module DataStructures.Tree {
         inOrder(): Array<INodeInterface>;
         preOrder(): Array<INodeInterface>;
         postOrder(): Array<INodeInterface>;
-        //leverOrder(): any[];
+        // leverOrder(): any[];
     }
 }

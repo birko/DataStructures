@@ -1,1 +1,1 @@
-{"version":3,"file":"Tree.js","sourceRoot":"","sources":["Tree.ts"],"names":[],"mappings":""}
+{"version":3,"file":"Tree.js","sourceRoot":"","sources":["Tree.ts"],"names":["DataStructures","DataStructures.Tree"],"mappings":"AAAA,IAAO,cAAc;AA+BpB,CA/BD,UAAO,cAAc;KAArBA,UAAsBA,IAAIA;QACtBC,YAAYA;IA8BhBA,CAACA,qDAAAD;mCAAAA;AAADA,CAACA,2CAAA"}

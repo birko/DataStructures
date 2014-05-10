@@ -1,7 +1,9 @@
-var DataStructures;
+﻿var DataStructures;
 (function (DataStructures) {
     /// <reference path="Tree.ts" />
     (function (Tree) {
+        "use strict";
+
         var AbstractBinaryNode = (function () {
             function AbstractBinaryNode() {
             }
@@ -10,12 +12,12 @@ var DataStructures;
             };
 
             AbstractBinaryNode.prototype.compare = function (node) {
-                throw new Error('This method is abstract');
+                throw new Error("This method is abstract");
             };
 
             AbstractBinaryNode.prototype.addChild = function (node) {
                 if (this.compare(node) > 0) {
-                    if (this.left == undefined) {
+                    if (this.left === undefined) {
                         node.parent = this;
                         this.left = node;
                         return node;
@@ -23,7 +25,7 @@ var DataStructures;
                         return this.left.addChild(node);
                     }
                 } else {
-                    if (this.right == undefined) {
+                    if (this.right === undefined) {
                         node.parent = this;
                         this.right = node;
                         return node;
@@ -35,7 +37,7 @@ var DataStructures;
 
             AbstractBinaryNode.prototype.searchChild = function (node) {
                 var test = this.compare(node);
-                if (test == 0) {
+                if (test === 0) {
                     return this;
                 } else if (test < 0) {
                     return this.left.searchChild(node);
@@ -85,7 +87,7 @@ var DataStructures;
                 this.root = undefined;
             }
             BinaryTree.prototype.addNode = function (node) {
-                if (this.root == undefined) {
+                if (this.root === undefined) {
                     this.root = node;
                 } else {
                     this.root.addChild(node);

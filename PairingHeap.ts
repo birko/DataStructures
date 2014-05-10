@@ -1,6 +1,7 @@
 ﻿/// <reference path="Tree.ts" />
 /// <reference path="BinaryTree.ts" />
 module DataStructures.Tree {
+    "use strict";
     export interface IPairingHeapNodeInterface extends IHeapNodeInterface, IBinaryNodeInterface {
         parent: IPairingHeapNodeInterface;
         left: IPairingHeapNodeInterface;
@@ -14,7 +15,8 @@ module DataStructures.Tree {
     }
 
     // abstract binary pairing heap node 
-    export class AbstractPairingHeapNode extends AbstractBinaryNode implements IPairingHeapNodeInterface, IBinaryNodeInterface, IHeapNodeInterface {
+    export class AbstractPairingHeapNode extends AbstractBinaryNode
+        implements IPairingHeapNodeInterface, IBinaryNodeInterface, IHeapNodeInterface {
         parent: IPairingHeapNodeInterface;
         left: IPairingHeapNodeInterface;
         right: IPairingHeapNodeInterface;
@@ -24,13 +26,13 @@ module DataStructures.Tree {
         }
 
         priority(): number {
-            throw new Error('This method is abstract');
+            throw new Error("This method is abstract");
         }
 
         compare(node: IPairingHeapNodeInterface): number {
-            var thispriority = this.priority();
-            var nodepriority = node.priority();
-            if (thispriority == nodepriority) {
+            var thispriority:number = this.priority();
+            var nodepriority:number = node.priority();
+            if (thispriority === nodepriority) {
                 return 0;
             } else if (thispriority < nodepriority) {
                 return -1;
@@ -43,31 +45,32 @@ module DataStructures.Tree {
             return <IPairingHeapNodeInterface>super.searchChild(<IBinaryNodeInterface>node);
         }
 
-        //return the minimal node of tree
+        // return the minimal node of tree
         // swap children of nodes to  preserve the tree
-        //right subtree of rootnode is always empty in binary paring heap
+        // right subtree of rootnode is always empty in binary paring heap
         addChild(node: IPairingHeapNodeInterface): IPairingHeapNodeInterface {
-            var minNode = undefined;
+            var minNode: IPairingHeapNodeInterface = undefined;
+            var min_left: IPairingHeapNodeInterface = undefined;
             if (this.compare(node) > 0) {  // node < this (node is less than this)
-                var min_left = node.left; // store node.left subtree
+                min_left = node.left; // store node.left subtree
                 node.left = this; // this is node.left subtree
                 this.right = min_left; // this.right subtree is node.left previous subtree
                 this.parent = node; // set this.parent to  node
-                if (min_left != undefined) { // if node.left previous subtree is not empty set its parent to this
+                if (min_left !== undefined) { // if node.left previous subtree is not empty set its parent to this
                     min_left.parent = this;
                 }
                 minNode = node;
             } else { // if this is less or equal than  node
-                var min_left = this.left; // store this.left subtree
-                var max_right = node.right; // store node.right subtree
+                min_left = this.left; // store this.left subtree
+                var max_right:IPairingHeapNodeInterface = node.right; // store node.right subtree
                 node.right = min_left; // node.right set to  this.left subtree
                 this.left = node; // this.left subtree set to node
                 this.right = max_right; // rhis.right subtree set to node.right previous subtree
                 node.parent = this; // set node parent to this
-                if (min_left !== undefined) { //if this.left previous subtree is not empty set its parent to node
+                if (min_left !== undefined) { // if this.left previous subtree is not empty set its parent to node
                     min_left.parent = node;
                 }
-                if (max_right !== undefined) { //if node.right previous subtree is not empty set ist parent to this
+                if (max_right !== undefined) { // if node.right previous subtree is not empty set ist parent to this
                     max_right.parent = this;
                 }
                 minNode = this;
@@ -85,7 +88,7 @@ module DataStructures.Tree {
         }
 
         addNode(node: IPairingHeapNodeInterface): ITreeInterface {
-            if (this.root != undefined) {
+            if (this.root !== undefined) {
                 this.root = this.root.addChild(node);
             } else {
                 this.root = node;
@@ -94,10 +97,10 @@ module DataStructures.Tree {
         }
 
         removeNode(node: IPairingHeapNodeInterface): IPairingHeapNodeInterface {
-            var removeNode = this.searchNode(node);
-            var children = removeNode.children();
-            var nodeLeft = children[0];
-            var nodeRight = children[1];
+            var removeNode: IPairingHeapNodeInterface = this.searchNode(node);
+            var children: Array<IPairingHeapNodeInterface> = removeNode.children();
+            var nodeLeft: IPairingHeapNodeInterface = children[0];
+            var nodeRight: IPairingHeapNodeInterface = children[1];
             nodeLeft.parent = removeNode.parent;
             nodeLeft.addChild(nodeRight);
             return removeNode;
@@ -111,11 +114,11 @@ module DataStructures.Tree {
         }
 
         removeMinPriority(): IPairingHeapNodeInterface {
-            var result = this.root; // persist old root
+            var result: IPairingHeapNodeInterface = this.root; // persist old root
             if (this.root !== undefined) {
                 this.root = result.left;
-                if (this.root != undefined) {
-                    while (this.root.right != undefined) {
+                if (this.root !== undefined) {
+                    while (this.root.right !== undefined) {
                         this.root = this.root.addChild(this.root.right);
                     }
                     this.root.parent = undefined;
@@ -125,7 +128,7 @@ module DataStructures.Tree {
         }
 
         inOrder(): Array<INodeInterface> {
-            var result = new Array();
+            var result: Array<INodeInterface> = new Array();
             if (this.root !== undefined) {
                 result = this.root.inOrder(result);
             }
@@ -133,7 +136,7 @@ module DataStructures.Tree {
         }
 
         preOrder(): Array<INodeInterface> {
-            var result = new Array();
+            var result: Array<INodeInterface> = new Array();
             if (this.root !== undefined) {
                 result = this.root.preOrder(result);
             }
@@ -141,7 +144,7 @@ module DataStructures.Tree {
         }
 
         postOrder(): Array<INodeInterface> {
-            var result = new Array();
+            var result: Array<INodeInterface> = new Array();
             if (this.root !== undefined) {
                 result = this.root.postOrder(result);
             }
