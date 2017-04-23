@@ -2,25 +2,62 @@
 module DataStructures.Tree {
     "use strict";
     export interface IBinaryNodeInterface extends INodeInterface {
-        parent: IBinaryNodeInterface;
-        left: IBinaryNodeInterface;
-        right: IBinaryNodeInterface;
+        getParent(): IBinaryNodeInterface;
+        setParent(parent: IBinaryNodeInterface): IBinaryNodeInterface;
 
-        addChild(node: IBinaryNodeInterface): IBinaryNodeInterface;
-        children(): Array<IBinaryNodeInterface>;
-        searchChild(node: IBinaryNodeInterface): IBinaryNodeInterface;
+        add(node: IBinaryNodeInterface): IBinaryNodeInterface;
+        compare(node: IBinaryNodeInterface): number;
+        children(): IBinaryNodeInterface[];
+        hasChildren(): boolean;
+        search(node: IBinaryNodeInterface): IBinaryNodeInterface;
+
+        inOrder(items: List<IBinaryNodeInterface>): List<IBinaryNodeInterface>;
+        preOrder(items: List<IBinaryNodeInterface>): List<IBinaryNodeInterface>;
+        postOrder(items: List<IBinaryNodeInterface>): List<IBinaryNodeInterface>;
+        leverOrder(items: List<IBinaryNodeInterface>): List<IBinaryNodeInterface>;
+
+        getLeft(): IBinaryNodeInterface;
+        setLeft(left: IBinaryNodeInterface): IBinaryNodeInterface;
+        getRight(): IBinaryNodeInterface;
+        setRight(right: IBinaryNodeInterface): IBinaryNodeInterface;
     }
 
-    export class AbstractBinaryNode implements IBinaryNodeInterface, INodeInterface {
-        parent: IBinaryNodeInterface;
-        left: IBinaryNodeInterface;
-        right: IBinaryNodeInterface;
+    export abstract class AbstractBinaryNode extends AbstractNode implements IBinaryNodeInterface {
+       
+        private left: IBinaryNodeInterface = null;
+        private right: IBinaryNodeInterface = null;
 
-        children(): Array<IBinaryNodeInterface> {
-            return Array(this.left, this.right);
+        public getParent(): IBinaryNodeInterface {
+            return <IBinaryNodeInterface>super.getParent();
         }
 
-        compare(node: IBinaryNodeInterface): number {
+        public setParent(parent: IBinaryNodeInterface): IBinaryNodeInterface {
+            return <IBinaryNodeInterface>super.setParent(parent)
+        }
+
+        public getLeft(): IBinaryNodeInterface {
+            return this.left;
+        }
+
+        public setLeft(left: IBinaryNodeInterface): IBinaryNodeInterface {
+            this.left = left;
+            return this;
+        }
+
+        public getRight(): IBinaryNodeInterface {
+            return this.right;
+        }
+
+        public setRight(right: IBinaryNodeInterface): IBinaryNodeInterface {
+            this.right = right;
+            return this;
+        }
+
+        public children(): IBinaryNodeInterface[] {
+            return [this.getLeft(), this.getRight()];
+        }
+
+        public compare(node: IBinaryNodeInterface): number {
             /*
                -1: this is less than node
                 0: this is equal node
@@ -29,137 +66,83 @@ module DataStructures.Tree {
             throw new Error("This method is abstract");
         }
 
-        addChild(node: IBinaryNodeInterface): IBinaryNodeInterface {
+        public add(node: IBinaryNodeInterface): IBinaryNodeInterface {
             if (this.compare(node) > 0) { // node < this
-                if (this.left === undefined) {
-                    node.parent = this;
-                    this.left = node;
+                if (this.getLeft() === null) {
+                    node.setParent(this);
+                    this.setLeft(node);
                     return node;
                 } else {
-                    return this.left.addChild(node);
+                    return this.getLeft().add(node);
                 }
             } else {
-                if (this.right === undefined) {
-                    node.parent = this;
-                    this.right = node;
+                if (this.getRight() === null) {
+                    node.setParent(this);
+                    this.setRight(node);
                     return node;
                 } else {
-                    return this.right.addChild(node);
+                    return this.getRight().add(node);
                 }
             }
         }
 
-        searchChild(node: IBinaryNodeInterface): IBinaryNodeInterface {
+        public search(node: IBinaryNodeInterface): IBinaryNodeInterface {
             var test:number = this.compare(node);
             if (test === 0) {
                 return this;
             } else if (test < 0) {
-                return this.left.searchChild(node);
+                return this.getLeft().search(node);
             } else {
-                return this.right.searchChild(node);
+                return this.getRight().search(node);
             }
         }
 
-        inOrder(items: Array<INodeInterface>): Array<INodeInterface> {
-            if (this.left !== undefined) {
-                items = this.left.inOrder(items);
-            }
-            items.push(this);
-            if (this.right !== undefined) {
-                items = this.right.inOrder(items);
-            }
-            return items;
+        public inOrder(items: List<IBinaryNodeInterface>): List<IBinaryNodeInterface> {
+            return <List<IBinaryNodeInterface>>super.leverOrder(items);
         }
 
-        preOrder(items: Array<INodeInterface>): Array<INodeInterface> {
-            items.push(this);
-            if (this.left !== undefined) {
-                items = this.left.inOrder(items);
-            }
-            if (this.right !== undefined) {
-                items = this.right.inOrder(items);
-            }
-            return items;
+        public preOrder(items: List<IBinaryNodeInterface>): List<IBinaryNodeInterface> {
+            return <List<IBinaryNodeInterface>>super.preOrder(items);
         }
 
-        postOrder(items: Array<INodeInterface>): Array<INodeInterface> {
-            if (this.left !== undefined) {
-                items = this.left.inOrder(items);
-            }
-            if (this.right !== undefined) {
-                items = this.right.inOrder(items);
-            }
-            items.push(this);
-            return items;
+        public postOrder(items: List<IBinaryNodeInterface>): List<IBinaryNodeInterface> {
+            return <List<IBinaryNodeInterface>>super.postOrder(items);
+        }
+
+        public leverOrder(items: List<IBinaryNodeInterface>): List<IBinaryNodeInterface> {
+            return <List<IBinaryNodeInterface>>super.leverOrder(items);
         }
     }
 
-    export class BinaryTree implements ITreeInterface {
-        root: IBinaryNodeInterface;
-
+    export class BinaryTree extends AbstractTree implements ITreeInterface {
         constructor() {
-            this.root = undefined;
+            super();
         }
 
-        addNode(node: IBinaryNodeInterface): ITreeInterface {
-            if (this.root === undefined) {
-                this.root = node;
-            } else {
-                this.root.addChild(node);
-            }
-            return this;
+        public getRoot(): IBinaryNodeInterface {
+            return <IBinaryNodeInterface>super.getRoot();
         }
 
-        removeNode(node: IBinaryNodeInterface):INodeInterface {
-            var removeNode:INodeInterface = this.searchNode(node);
-            var children:Array<INodeInterface> = removeNode.children();
-            var nodeLeft: INodeInterface  = children[0];
-            var nodeRight: INodeInterface = children[1];
-            nodeLeft.parent = removeNode.parent;
-            nodeLeft.addChild(nodeRight);
+        public setRoot(root: IBinaryNodeInterface) : BinaryTree {
+            return <BinaryTree>super.setRoot(root);
+        }
+
+        public addNode(node: IBinaryNodeInterface): BinaryTree {
+            return <BinaryTree>super.addNode(node);
+        }
+
+        public removeNode(node: IBinaryNodeInterface): IBinaryNodeInterface {
+            var removeNode: IBinaryNodeInterface = this.searchNode(node);
+            var children: IBinaryNodeInterface[] = removeNode.children();
+            var nodeLeft: IBinaryNodeInterface = children[0];
+            var nodeRight: IBinaryNodeInterface = children[1];
+            nodeLeft.setParent(removeNode.getParent());
+            nodeLeft.add(nodeRight);
             return removeNode;
         }
 
-        searchNode(node: IBinaryNodeInterface):INodeInterface {
-            if (this.root !== undefined) {
-                return this.root.searchChild(node);
-            }
-            return undefined;
+        public searchNode(node: IBinaryNodeInterface): IBinaryNodeInterface {
+            return <IBinaryNodeInterface>super.searchNode(node);
         }
-
-        inOrder(): Array<INodeInterface> {
-            var result: Array<INodeInterface> = new Array();
-            if (this.root !== undefined) {
-                result = this.root.inOrder(result);
-            }
-            return result;
-        }
-
-        preOrder(): Array<INodeInterface> {
-            var result: Array<INodeInterface> = new Array();
-            if (this.root !== undefined) {
-                result = this.root.preOrder(result);
-            }
-            return result;
-        }
-
-        postOrder(): Array<INodeInterface> {
-            var result: Array<INodeInterface> = new Array();
-            if (this.root !== undefined) {
-                result = this.root.postOrder(result);
-            }
-            return result;
-        }
-
-        /*
-        leverOrder(): any[]
-        {
-            var result = new Array();
-            if (this.root !== undefined) {
-                result = this.root.leverOrder(result);
-            }
-            return result;
-        }
-        */
     }
 }
