@@ -2,15 +2,24 @@
 /// <reference path="BinaryTree.ts" />
 module DataStructures.Tree {
     "use strict";
+    export interface IHeapNodeInterface extends INodeInterface {
+        priority(): number;
+    }
+
     export interface IPairingHeapNodeInterface extends IBinaryNodeInterface, IHeapNodeInterface {
+        // extend interface implementations overide
+        priority(): number;
+
+        // extend interface implementations overide
         getParent(): IPairingHeapNodeInterface;
         setParent(parent: IPairingHeapNodeInterface): IPairingHeapNodeInterface;
 
         add(node: IPairingHeapNodeInterface): IPairingHeapNodeInterface;
+        remove(node: IPairingHeapNodeInterface): IPairingHeapNodeInterface;
+        search(node: IPairingHeapNodeInterface): IPairingHeapNodeInterface; 
         compare(node: IPairingHeapNodeInterface): number;
         children(): Array<IPairingHeapNodeInterface>;
         hasChildren(): boolean;
-        search(node: IPairingHeapNodeInterface): IPairingHeapNodeInterface;      
 
         inOrder(items: List<IPairingHeapNodeInterface>): List<IPairingHeapNodeInterface>;
         preOrder(items: List<IPairingHeapNodeInterface>): List<IPairingHeapNodeInterface>;
@@ -20,48 +29,17 @@ module DataStructures.Tree {
         getLeft(): IPairingHeapNodeInterface;
         setLeft(left: IPairingHeapNodeInterface): IPairingHeapNodeInterface;
         getRight(): IPairingHeapNodeInterface;
-        setRight(right: IPairingHeapNodeInterface): IPairingHeapNodeInterface;
-
-        priority(): number;
+        setRight(right: IPairingHeapNodeInterface): IPairingHeapNodeInterface;      
     }
 
     // abstract binary pairing heap node 
-    export class AbstractPairingHeapNode extends AbstractBinaryNode implements IPairingHeapNodeInterface {
+    export abstract class AbstractPairingHeapNode extends AbstractBinaryNode implements IPairingHeapNodeInterface {
 
-        public getParent(): IPairingHeapNodeInterface {
-            return <IPairingHeapNodeInterface>super.getParent();
-        }
-        
-        public setParent(parent: IPairingHeapNodeInterface): IPairingHeapNodeInterface {
-            return <IPairingHeapNodeInterface>super.setParent(parent);
-        }
-        public getLeft(): IPairingHeapNodeInterface {
-            return <IPairingHeapNodeInterface>super.getLeft()
-        }
-        
-        public setLeft(left: IPairingHeapNodeInterface): IPairingHeapNodeInterface {
-            return <IPairingHeapNodeInterface>super.setLeft(left);
-        }
-        
-        public getRight(): IPairingHeapNodeInterface {
-            return <IPairingHeapNodeInterface>super.getRight();
-        }
-        
-        public setRight(right: IPairingHeapNodeInterface): IPairingHeapNodeInterface {
-            return <IPairingHeapNodeInterface>super.setRight(right);
-        }
-        
-        public children(): IPairingHeapNodeInterface[] {
-            return <IPairingHeapNodeInterface[]>super.children();
-        }
-
-        public priority(): number {
-            throw new Error("This method is abstract");
-        }
+        public abstract priority(): number;
 
         public compare(node: IPairingHeapNodeInterface): number {
-            var thispriority:number = this.priority();
-            var nodepriority:number = node.priority();
+            var thispriority: number = this.priority();
+            var nodepriority: number = node.priority();
             if (thispriority === nodepriority) {
                 return 0;
             } else if (thispriority < nodepriority) {
@@ -69,26 +47,6 @@ module DataStructures.Tree {
             } else {
                 return 1;
             }
-        }
-
-        public search(node: IPairingHeapNodeInterface): IPairingHeapNodeInterface {
-            return <IPairingHeapNodeInterface>super.search(<IPairingHeapNodeInterface>node);
-        }
-
-        public inOrder(items: List<IPairingHeapNodeInterface>): List<IPairingHeapNodeInterface> {
-            return <List<IPairingHeapNodeInterface>>super.inOrder(items);
-        }
-
-        public preOrder(items: List<IPairingHeapNodeInterface>): List<IPairingHeapNodeInterface> {
-            return <List<IPairingHeapNodeInterface>>super.preOrder(items);
-        }
-
-        public postOrder(items: List<IPairingHeapNodeInterface>): List<IPairingHeapNodeInterface> {
-            return <List<IPairingHeapNodeInterface>>super.postOrder(items);
-        }
-
-        public leverOrder(items: List<IPairingHeapNodeInterface>): List<IPairingHeapNodeInterface> {
-            return <List<IPairingHeapNodeInterface>>super.leverOrder(items);
         }
 
         // return the minimal node of tree
@@ -123,36 +81,71 @@ module DataStructures.Tree {
             }
             return minNode; // return minimal node
         }
+
+        public remove(node: IPairingHeapNodeInterface): IPairingHeapNodeInterface {
+            return <IPairingHeapNodeInterface>super.remove(node);
+        }
+
+        public getParent(): IPairingHeapNodeInterface {
+            return <IPairingHeapNodeInterface>super.getParent();
+        }
+        
+        public setParent(parent: IPairingHeapNodeInterface): IPairingHeapNodeInterface {
+            return <IPairingHeapNodeInterface>super.setParent(parent);
+        }
+        public getLeft(): IPairingHeapNodeInterface {
+            return <IPairingHeapNodeInterface>super.getLeft()
+        }
+        
+        public setLeft(left: IPairingHeapNodeInterface): IPairingHeapNodeInterface {
+            return <IPairingHeapNodeInterface>super.setLeft(left);
+        }
+        
+        public getRight(): IPairingHeapNodeInterface {
+            return <IPairingHeapNodeInterface>super.getRight();
+        }
+        
+        public setRight(right: IPairingHeapNodeInterface): IPairingHeapNodeInterface {
+            return <IPairingHeapNodeInterface>super.setRight(right);
+        }
+        
+        public children(): IPairingHeapNodeInterface[] {
+            return <IPairingHeapNodeInterface[]>super.children();
+        }
+
+        public search(node: IPairingHeapNodeInterface): IPairingHeapNodeInterface {
+            return <IPairingHeapNodeInterface>super.search(<IPairingHeapNodeInterface>node);
+        }
+
+        public inOrder(items: List<IPairingHeapNodeInterface>): List<IPairingHeapNodeInterface> {
+            return <List<IPairingHeapNodeInterface>>super.inOrder(items);
+        }
+
+        public preOrder(items: List<IPairingHeapNodeInterface>): List<IPairingHeapNodeInterface> {
+            return <List<IPairingHeapNodeInterface>>super.preOrder(items);
+        }
+
+        public postOrder(items: List<IPairingHeapNodeInterface>): List<IPairingHeapNodeInterface> {
+            return <List<IPairingHeapNodeInterface>>super.postOrder(items);
+        }
+
+        public leverOrder(items: List<IPairingHeapNodeInterface>): List<IPairingHeapNodeInterface> {
+            return <List<IPairingHeapNodeInterface>>super.leverOrder(items);
+        }
     }
 
     // binary pairing heap implementation
-    export class PairingHeap extends BinaryTree implements ITreeInterface {
+    export class PairingHeap extends BinaryTree implements ITreeInterface, IPairingHeapNodeInterface {
 
         constructor() {
             super()
         }
 
-        public getRoot(): IPairingHeapNodeInterface {
-            return <IPairingHeapNodeInterface>super.getRoot();
+        public getMinPiorityNode(): IPairingHeapNodeInterface {
+            return this.getRoot();
         }
 
-        public setRoot(root: IPairingHeapNodeInterface): PairingHeap  {
-            return <PairingHeap>super.setRoot(root);
-        }
-
-        public addNode(node: IPairingHeapNodeInterface): PairingHeap {
-            return <PairingHeap>super.addNode(node);
-        }
-
-        public searchNode(node: IPairingHeapNodeInterface): IPairingHeapNodeInterface {
-            return <IPairingHeapNodeInterface>super.searchNode(node);
-        }
-
-        public removeNode(node: IPairingHeapNodeInterface): IPairingHeapNodeInterface {
-            return <IPairingHeapNodeInterface>super.removeNode(node);
-        }
-
-        public removeMinPriority(): IPairingHeapNodeInterface {
+        public removeMinPriorityNode(): IPairingHeapNodeInterface {
             var result: IPairingHeapNodeInterface = this.getRoot(); // persist old root
             if (this.getRoot() !== null) {
                 this.setRoot(result.getLeft());
@@ -164,6 +157,79 @@ module DataStructures.Tree {
                 }
             }
             return result; // return old root with lowest priority
+        }
+
+        ///interface implementation and parent typing ovveride
+        public priority(): number {
+            if (this.getRoot() !== null) {
+                return this.getRoot().priority();
+            }
+            return Infinity;
+        }
+
+        public getLeft(): IPairingHeapNodeInterface {
+            return <IPairingHeapNodeInterface>super.getLeft();
+        }
+
+        public setLeft(node: IPairingHeapNodeInterface): PairingHeap {
+            return <PairingHeap>super.setLeft(node);
+        }
+
+        public getRight(): IPairingHeapNodeInterface {
+            return <IPairingHeapNodeInterface>super.getRight();
+        }
+
+        public setRight(node: IPairingHeapNodeInterface): PairingHeap {
+            return <PairingHeap>super.setRight(node);
+        }
+
+
+        public getParent(): IPairingHeapNodeInterface {
+            return <IPairingHeapNodeInterface>super.getParent();
+        }
+
+        public setParent(node: IPairingHeapNodeInterface): PairingHeap {
+            return <PairingHeap>super.setParent(node);
+        }
+
+        public getRoot(): IPairingHeapNodeInterface {
+            return <IPairingHeapNodeInterface>super.getRoot();
+        }
+
+        public setRoot(root: IPairingHeapNodeInterface, clearParent: boolean = true): PairingHeap  {
+            return <PairingHeap>super.setRoot(root, clearParent);
+        }
+
+        public add(node: IPairingHeapNodeInterface): PairingHeap {
+            return <PairingHeap>super.add(node);
+        }
+
+        public search(node: IPairingHeapNodeInterface): IPairingHeapNodeInterface {
+            return <IPairingHeapNodeInterface>super.search(node);
+        }
+
+        public remove(node: IPairingHeapNodeInterface): IPairingHeapNodeInterface {
+            return <IPairingHeapNodeInterface>super.remove(node);
+        }
+
+        public children(): IPairingHeapNodeInterface[] {
+            return <IPairingHeapNodeInterface[]>super.children();
+        }
+
+        public inOrder(result: List<IPairingHeapNodeInterface>): List<IPairingHeapNodeInterface> {
+            return <List<IPairingHeapNodeInterface>>super.inOrder(result);
+        }
+
+        public preOrder(result: List<IPairingHeapNodeInterface>): List<IPairingHeapNodeInterface> {
+            return <List<IPairingHeapNodeInterface>>super.preOrder(result);
+        }
+
+        public postOrder(result: List<IPairingHeapNodeInterface>): List<IPairingHeapNodeInterface> {
+            return <List<IPairingHeapNodeInterface>>super.postOrder(result);
+        }
+
+        public leverOrder(result: List<IPairingHeapNodeInterface>): List<IPairingHeapNodeInterface> {
+            return <List<IPairingHeapNodeInterface>>super.leverOrder(result);
         }
     }
 }

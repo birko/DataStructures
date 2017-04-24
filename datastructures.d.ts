@@ -1,151 +1,7 @@
-declare module DataStructures.Tree {
-    interface INodeInterface {
-        getParent(): INodeInterface;
-        setParent(parent: INodeInterface): INodeInterface;
-        add(node: INodeInterface): INodeInterface;
-        compare(node: INodeInterface): number;
-        children(): INodeInterface[];
-        hasChildren(): boolean;
-        search(node: INodeInterface): INodeInterface;
-        inOrder(items: List<INodeInterface>): List<INodeInterface>;
-        preOrder(items: List<INodeInterface>): List<INodeInterface>;
-        postOrder(items: List<INodeInterface>): List<INodeInterface>;
-        leverOrder(items: List<INodeInterface>): List<INodeInterface>;
-    }
-    interface IHeapNodeInterface extends INodeInterface {
-        priority(): number;
-    }
-    interface ITreeInterface {
-        getRoot(): INodeInterface;
-        setRoot(parent: INodeInterface): ITreeInterface;
-        addNode(node: INodeInterface): ITreeInterface;
-        removeNode(node: INodeInterface): INodeInterface;
-        searchNode(node: INodeInterface): INodeInterface;
-        inOrder(): List<INodeInterface>;
-        preOrder(): List<INodeInterface>;
-        postOrder(): List<INodeInterface>;
-        leverOrder(): List<INodeInterface>;
-    }
-    class AbstractNode implements INodeInterface {
-        private parent;
-        getParent(): INodeInterface;
-        setParent(parent: INodeInterface): INodeInterface;
-        compare(node: INodeInterface): number;
-        add(node: INodeInterface): INodeInterface;
-        children(): INodeInterface[];
-        search(node: INodeInterface): INodeInterface;
-        hasChildren(): boolean;
-        inOrder(items: List<INodeInterface>): List<INodeInterface>;
-        preOrder(items: List<INodeInterface>): List<INodeInterface>;
-        postOrder(items: List<INodeInterface>): List<INodeInterface>;
-        leverOrder(items: List<INodeInterface>): List<INodeInterface>;
-    }
-    class AbstractTree implements ITreeInterface {
-        private root;
-        constructor();
-        getRoot(): INodeInterface;
-        setRoot(root: INodeInterface): AbstractTree;
-        addNode(node: INodeInterface): AbstractTree;
-        searchNode(node: INodeInterface): INodeInterface;
-        removeNode(node: INodeInterface): INodeInterface;
-        inOrder(): List<INodeInterface>;
-        preOrder(): List<INodeInterface>;
-        postOrder(): List<INodeInterface>;
-        leverOrder(): List<INodeInterface>;
-    }
-}
-declare module DataStructures.Tree {
-    interface IBinaryNodeInterface extends INodeInterface {
-        getParent(): IBinaryNodeInterface;
-        setParent(parent: IBinaryNodeInterface): IBinaryNodeInterface;
-        add(node: IBinaryNodeInterface): IBinaryNodeInterface;
-        compare(node: IBinaryNodeInterface): number;
-        children(): IBinaryNodeInterface[];
-        hasChildren(): boolean;
-        search(node: IBinaryNodeInterface): IBinaryNodeInterface;
-        inOrder(items: List<IBinaryNodeInterface>): List<IBinaryNodeInterface>;
-        preOrder(items: List<IBinaryNodeInterface>): List<IBinaryNodeInterface>;
-        postOrder(items: List<IBinaryNodeInterface>): List<IBinaryNodeInterface>;
-        leverOrder(items: List<IBinaryNodeInterface>): List<IBinaryNodeInterface>;
-        getLeft(): IBinaryNodeInterface;
-        setLeft(left: IBinaryNodeInterface): IBinaryNodeInterface;
-        getRight(): IBinaryNodeInterface;
-        setRight(right: IBinaryNodeInterface): IBinaryNodeInterface;
-    }
-    abstract class AbstractBinaryNode extends AbstractNode implements IBinaryNodeInterface {
-        private left;
-        private right;
-        getParent(): IBinaryNodeInterface;
-        setParent(parent: IBinaryNodeInterface): IBinaryNodeInterface;
-        getLeft(): IBinaryNodeInterface;
-        setLeft(left: IBinaryNodeInterface): IBinaryNodeInterface;
-        getRight(): IBinaryNodeInterface;
-        setRight(right: IBinaryNodeInterface): IBinaryNodeInterface;
-        children(): IBinaryNodeInterface[];
-        compare(node: IBinaryNodeInterface): number;
-        add(node: IBinaryNodeInterface): IBinaryNodeInterface;
-        search(node: IBinaryNodeInterface): IBinaryNodeInterface;
-        inOrder(items: List<IBinaryNodeInterface>): List<IBinaryNodeInterface>;
-        preOrder(items: List<IBinaryNodeInterface>): List<IBinaryNodeInterface>;
-        postOrder(items: List<IBinaryNodeInterface>): List<IBinaryNodeInterface>;
-        leverOrder(items: List<IBinaryNodeInterface>): List<IBinaryNodeInterface>;
-    }
-    class BinaryTree extends AbstractTree implements ITreeInterface {
-        constructor();
-        getRoot(): IBinaryNodeInterface;
-        setRoot(root: IBinaryNodeInterface): BinaryTree;
-        addNode(node: IBinaryNodeInterface): BinaryTree;
-        removeNode(node: IBinaryNodeInterface): IBinaryNodeInterface;
-        searchNode(node: IBinaryNodeInterface): IBinaryNodeInterface;
-    }
-}
-declare module DataStructures.Tree {
-    interface IPairingHeapNodeInterface extends IBinaryNodeInterface, IHeapNodeInterface {
-        getParent(): IPairingHeapNodeInterface;
-        setParent(parent: IPairingHeapNodeInterface): IPairingHeapNodeInterface;
-        add(node: IPairingHeapNodeInterface): IPairingHeapNodeInterface;
-        compare(node: IPairingHeapNodeInterface): number;
-        children(): Array<IPairingHeapNodeInterface>;
-        hasChildren(): boolean;
-        search(node: IPairingHeapNodeInterface): IPairingHeapNodeInterface;
-        inOrder(items: List<IPairingHeapNodeInterface>): List<IPairingHeapNodeInterface>;
-        preOrder(items: List<IPairingHeapNodeInterface>): List<IPairingHeapNodeInterface>;
-        postOrder(items: List<IPairingHeapNodeInterface>): List<IPairingHeapNodeInterface>;
-        leverOrder(items: List<IPairingHeapNodeInterface>): List<IPairingHeapNodeInterface>;
-        getLeft(): IPairingHeapNodeInterface;
-        setLeft(left: IPairingHeapNodeInterface): IPairingHeapNodeInterface;
-        getRight(): IPairingHeapNodeInterface;
-        setRight(right: IPairingHeapNodeInterface): IPairingHeapNodeInterface;
-        priority(): number;
-    }
-    class AbstractPairingHeapNode extends AbstractBinaryNode implements IPairingHeapNodeInterface {
-        getParent(): IPairingHeapNodeInterface;
-        setParent(parent: IPairingHeapNodeInterface): IPairingHeapNodeInterface;
-        getLeft(): IPairingHeapNodeInterface;
-        setLeft(left: IPairingHeapNodeInterface): IPairingHeapNodeInterface;
-        getRight(): IPairingHeapNodeInterface;
-        setRight(right: IPairingHeapNodeInterface): IPairingHeapNodeInterface;
-        children(): IPairingHeapNodeInterface[];
-        priority(): number;
-        compare(node: IPairingHeapNodeInterface): number;
-        search(node: IPairingHeapNodeInterface): IPairingHeapNodeInterface;
-        inOrder(items: List<IPairingHeapNodeInterface>): List<IPairingHeapNodeInterface>;
-        preOrder(items: List<IPairingHeapNodeInterface>): List<IPairingHeapNodeInterface>;
-        postOrder(items: List<IPairingHeapNodeInterface>): List<IPairingHeapNodeInterface>;
-        leverOrder(items: List<IPairingHeapNodeInterface>): List<IPairingHeapNodeInterface>;
-        add(node: IPairingHeapNodeInterface): IPairingHeapNodeInterface;
-    }
-    class PairingHeap extends BinaryTree implements ITreeInterface {
-        constructor();
-        getRoot(): IPairingHeapNodeInterface;
-        setRoot(root: IPairingHeapNodeInterface): PairingHeap;
-        addNode(node: IPairingHeapNodeInterface): PairingHeap;
-        searchNode(node: IPairingHeapNodeInterface): IPairingHeapNodeInterface;
-        removeNode(node: IPairingHeapNodeInterface): IPairingHeapNodeInterface;
-        removeMinPriority(): IPairingHeapNodeInterface;
-    }
-}
 declare module DataStructures {
+    interface IComparable {
+        compare(item: IComparable): number;
+    }
     interface IAssocArray<TValue> {
         [index: string]: TValue;
     }
@@ -205,5 +61,197 @@ declare module DataStructures {
         has(name: string): boolean;
         get(name: string): TValue;
         remove(name: string): TValue;
+    }
+}
+declare module DataStructures.Tree {
+    interface INodeInterface extends IComparable {
+        getParent(): INodeInterface;
+        setParent(parent: INodeInterface): INodeInterface;
+        add(node: INodeInterface): INodeInterface;
+        remove(node: INodeInterface): INodeInterface;
+        search(node: INodeInterface): INodeInterface;
+        compare(node: INodeInterface): number;
+        children(): INodeInterface[];
+        hasChildren(): boolean;
+        inOrder(items: List<INodeInterface>): List<INodeInterface>;
+        preOrder(items: List<INodeInterface>): List<INodeInterface>;
+        postOrder(items: List<INodeInterface>): List<INodeInterface>;
+        leverOrder(items: List<INodeInterface>): List<INodeInterface>;
+    }
+    abstract class AbstractNode implements INodeInterface {
+        private parent;
+        private descendants;
+        constructor();
+        getParent(): INodeInterface;
+        setParent(parent: INodeInterface): INodeInterface;
+        compare(node: INodeInterface): number;
+        add(node: INodeInterface): INodeInterface;
+        children(): INodeInterface[];
+        getDescendants(): List<INodeInterface>;
+        setDescendants(children: INodeInterface[]): INodeInterface;
+        setDescendant(index: number, node: INodeInterface): INodeInterface;
+        getDescendant(index: number): INodeInterface;
+        remove(node: INodeInterface): INodeInterface;
+        search(node: INodeInterface): INodeInterface;
+        hasChildren(): boolean;
+        inOrder(items: List<INodeInterface>): List<INodeInterface>;
+        preOrder(items: List<INodeInterface>): List<INodeInterface>;
+        postOrder(items: List<INodeInterface>): List<INodeInterface>;
+        leverOrder(items: List<INodeInterface>): List<INodeInterface>;
+    }
+    interface ITreeInterface extends INodeInterface {
+        getRoot(): INodeInterface;
+        setRoot(node: INodeInterface, clearParent: boolean): ITreeInterface;
+        getParent(): INodeInterface;
+        setParent(parent: INodeInterface): INodeInterface;
+        add(node: INodeInterface): ITreeInterface;
+        remove(node: INodeInterface): INodeInterface;
+        search(node: INodeInterface): INodeInterface;
+        compare(node: INodeInterface): number;
+        children(): INodeInterface[];
+        hasChildren(): boolean;
+        inOrder(items: List<INodeInterface>): List<INodeInterface>;
+        preOrder(items: List<INodeInterface>): List<INodeInterface>;
+        postOrder(items: List<INodeInterface>): List<INodeInterface>;
+        leverOrder(items: List<INodeInterface>): List<INodeInterface>;
+    }
+    abstract class AbstractTree implements ITreeInterface {
+        private root;
+        constructor();
+        getRoot(): INodeInterface;
+        setRoot(node: INodeInterface, clearParent?: boolean): AbstractTree;
+        getParent(): INodeInterface;
+        setParent(node: INodeInterface): AbstractTree;
+        add(node: INodeInterface): AbstractTree;
+        search(node: INodeInterface): INodeInterface;
+        remove(node: INodeInterface): INodeInterface;
+        compare(node: INodeInterface): number;
+        children(): INodeInterface[];
+        hasChildren(): boolean;
+        inOrder(result: List<INodeInterface>): List<INodeInterface>;
+        preOrder(result: List<INodeInterface>): List<INodeInterface>;
+        postOrder(result: List<INodeInterface>): List<INodeInterface>;
+        leverOrder(result: List<INodeInterface>): List<INodeInterface>;
+    }
+}
+declare module DataStructures.Tree {
+    interface IBinaryNodeInterface extends INodeInterface {
+        getLeft(): IBinaryNodeInterface;
+        setLeft(left: IBinaryNodeInterface): IBinaryNodeInterface;
+        getRight(): IBinaryNodeInterface;
+        setRight(right: IBinaryNodeInterface): IBinaryNodeInterface;
+        getParent(): IBinaryNodeInterface;
+        setParent(parent: IBinaryNodeInterface): IBinaryNodeInterface;
+        add(node: IBinaryNodeInterface): IBinaryNodeInterface;
+        remove(node: IBinaryNodeInterface): IBinaryNodeInterface;
+        search(node: IBinaryNodeInterface): IBinaryNodeInterface;
+        compare(node: IBinaryNodeInterface): number;
+        children(): IBinaryNodeInterface[];
+        hasChildren(): boolean;
+        inOrder(items: List<IBinaryNodeInterface>): List<IBinaryNodeInterface>;
+        preOrder(items: List<IBinaryNodeInterface>): List<IBinaryNodeInterface>;
+        postOrder(items: List<IBinaryNodeInterface>): List<IBinaryNodeInterface>;
+        leverOrder(items: List<IBinaryNodeInterface>): List<IBinaryNodeInterface>;
+    }
+    abstract class AbstractBinaryNode extends AbstractNode implements IBinaryNodeInterface {
+        constructor();
+        getParent(): IBinaryNodeInterface;
+        setParent(parent: IBinaryNodeInterface): IBinaryNodeInterface;
+        getLeft(): IBinaryNodeInterface;
+        setLeft(left: IBinaryNodeInterface): IBinaryNodeInterface;
+        getRight(): IBinaryNodeInterface;
+        setRight(right: IBinaryNodeInterface): IBinaryNodeInterface;
+        children(): IBinaryNodeInterface[];
+        compare(node: IBinaryNodeInterface): number;
+        add(node: IBinaryNodeInterface): IBinaryNodeInterface;
+        search(node: IBinaryNodeInterface): IBinaryNodeInterface;
+        remove(node: IBinaryNodeInterface): IBinaryNodeInterface;
+        inOrder(items: List<IBinaryNodeInterface>): List<IBinaryNodeInterface>;
+        preOrder(items: List<IBinaryNodeInterface>): List<IBinaryNodeInterface>;
+        postOrder(items: List<IBinaryNodeInterface>): List<IBinaryNodeInterface>;
+        leverOrder(items: List<IBinaryNodeInterface>): List<IBinaryNodeInterface>;
+    }
+    class BinaryTree extends AbstractTree implements ITreeInterface, IBinaryNodeInterface {
+        constructor();
+        getLeft(): IBinaryNodeInterface;
+        setLeft(node: IBinaryNodeInterface): BinaryTree;
+        getRight(): IBinaryNodeInterface;
+        setRight(node: IBinaryNodeInterface): BinaryTree;
+        getParent(): IBinaryNodeInterface;
+        setParent(node: IBinaryNodeInterface): BinaryTree;
+        getRoot(): IBinaryNodeInterface;
+        setRoot(root: IBinaryNodeInterface, clearParent?: boolean): BinaryTree;
+        add(node: IBinaryNodeInterface): BinaryTree;
+        remove(node: IBinaryNodeInterface): IBinaryNodeInterface;
+        search(node: IBinaryNodeInterface): IBinaryNodeInterface;
+        children(): IBinaryNodeInterface[];
+        inOrder(result: List<IBinaryNodeInterface>): List<IBinaryNodeInterface>;
+        preOrder(result: List<IBinaryNodeInterface>): List<IBinaryNodeInterface>;
+        postOrder(result: List<IBinaryNodeInterface>): List<IBinaryNodeInterface>;
+        leverOrder(result: List<IBinaryNodeInterface>): List<IBinaryNodeInterface>;
+    }
+}
+declare module DataStructures.Tree {
+    interface IHeapNodeInterface extends INodeInterface {
+        priority(): number;
+    }
+    interface IPairingHeapNodeInterface extends IBinaryNodeInterface, IHeapNodeInterface {
+        priority(): number;
+        getParent(): IPairingHeapNodeInterface;
+        setParent(parent: IPairingHeapNodeInterface): IPairingHeapNodeInterface;
+        add(node: IPairingHeapNodeInterface): IPairingHeapNodeInterface;
+        remove(node: IPairingHeapNodeInterface): IPairingHeapNodeInterface;
+        search(node: IPairingHeapNodeInterface): IPairingHeapNodeInterface;
+        compare(node: IPairingHeapNodeInterface): number;
+        children(): Array<IPairingHeapNodeInterface>;
+        hasChildren(): boolean;
+        inOrder(items: List<IPairingHeapNodeInterface>): List<IPairingHeapNodeInterface>;
+        preOrder(items: List<IPairingHeapNodeInterface>): List<IPairingHeapNodeInterface>;
+        postOrder(items: List<IPairingHeapNodeInterface>): List<IPairingHeapNodeInterface>;
+        leverOrder(items: List<IPairingHeapNodeInterface>): List<IPairingHeapNodeInterface>;
+        getLeft(): IPairingHeapNodeInterface;
+        setLeft(left: IPairingHeapNodeInterface): IPairingHeapNodeInterface;
+        getRight(): IPairingHeapNodeInterface;
+        setRight(right: IPairingHeapNodeInterface): IPairingHeapNodeInterface;
+    }
+    abstract class AbstractPairingHeapNode extends AbstractBinaryNode implements IPairingHeapNodeInterface {
+        abstract priority(): number;
+        compare(node: IPairingHeapNodeInterface): number;
+        add(node: IPairingHeapNodeInterface): IPairingHeapNodeInterface;
+        remove(node: IPairingHeapNodeInterface): IPairingHeapNodeInterface;
+        getParent(): IPairingHeapNodeInterface;
+        setParent(parent: IPairingHeapNodeInterface): IPairingHeapNodeInterface;
+        getLeft(): IPairingHeapNodeInterface;
+        setLeft(left: IPairingHeapNodeInterface): IPairingHeapNodeInterface;
+        getRight(): IPairingHeapNodeInterface;
+        setRight(right: IPairingHeapNodeInterface): IPairingHeapNodeInterface;
+        children(): IPairingHeapNodeInterface[];
+        search(node: IPairingHeapNodeInterface): IPairingHeapNodeInterface;
+        inOrder(items: List<IPairingHeapNodeInterface>): List<IPairingHeapNodeInterface>;
+        preOrder(items: List<IPairingHeapNodeInterface>): List<IPairingHeapNodeInterface>;
+        postOrder(items: List<IPairingHeapNodeInterface>): List<IPairingHeapNodeInterface>;
+        leverOrder(items: List<IPairingHeapNodeInterface>): List<IPairingHeapNodeInterface>;
+    }
+    class PairingHeap extends BinaryTree implements ITreeInterface, IPairingHeapNodeInterface {
+        constructor();
+        getMinPiorityNode(): IPairingHeapNodeInterface;
+        removeMinPriorityNode(): IPairingHeapNodeInterface;
+        priority(): number;
+        getLeft(): IPairingHeapNodeInterface;
+        setLeft(node: IPairingHeapNodeInterface): PairingHeap;
+        getRight(): IPairingHeapNodeInterface;
+        setRight(node: IPairingHeapNodeInterface): PairingHeap;
+        getParent(): IPairingHeapNodeInterface;
+        setParent(node: IPairingHeapNodeInterface): PairingHeap;
+        getRoot(): IPairingHeapNodeInterface;
+        setRoot(root: IPairingHeapNodeInterface, clearParent?: boolean): PairingHeap;
+        add(node: IPairingHeapNodeInterface): PairingHeap;
+        search(node: IPairingHeapNodeInterface): IPairingHeapNodeInterface;
+        remove(node: IPairingHeapNodeInterface): IPairingHeapNodeInterface;
+        children(): IPairingHeapNodeInterface[];
+        inOrder(result: List<IPairingHeapNodeInterface>): List<IPairingHeapNodeInterface>;
+        preOrder(result: List<IPairingHeapNodeInterface>): List<IPairingHeapNodeInterface>;
+        postOrder(result: List<IPairingHeapNodeInterface>): List<IPairingHeapNodeInterface>;
+        leverOrder(result: List<IPairingHeapNodeInterface>): List<IPairingHeapNodeInterface>;
     }
 }

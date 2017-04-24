@@ -1,5 +1,15 @@
 module DataStructures {
     "use strict";
+
+    export interface IComparable {
+         /*
+            -1: this is less than parameter item
+             0: this is equal parameter item
+             1: this is greather tparameter item
+         */
+        compare(item: IComparable): number;
+    }
+
     export interface IAssocArray<TValue> {
         [index: string]: TValue;
     }
@@ -238,7 +248,7 @@ module DataStructures {
         }
 
         public hasData(): boolean {
-            return (this.getData().getLength() > 0);
+            return this.getData().getLength() > 0;
         }
 
         public getItems(): TValue[] {

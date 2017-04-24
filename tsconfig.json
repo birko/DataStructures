@@ -2,21 +2,20 @@
   "compileOnSave": true,
   "compilerOptions": {
     "alwaysStrict": true,
-    "noImplicitAny": true,
-    "removeComments": true,
-    "preserveConstEnums": true,
-    "sourceMap": true,
     "declaration": true,
-    "watch": true,
-    "outFile": "datastructures.js"
+    "noImplicitAny": true,
+    "outFile": "datastructures.js",
+    "preserveConstEnums": true,
+    "removeComments": true,
+    "sourceMap": true,
+    "watch": true
   },
-  "include": [
-    "*.ts"
-  ],
   "exclude": [
     "*.d.ts"
-  ]/*,
-
-  "files": [
-  ]*/
+  ],
+  //"files": [
+  //],
+  "include": [
+    "*.ts"
+  ]
 }

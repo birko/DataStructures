@@ -1,31 +1,36 @@
 /// <reference path="Tree.ts" />
+/// <reference path="Types.ts" />
 module DataStructures.Tree {
     "use strict";
     export interface IBinaryNodeInterface extends INodeInterface {
+        getLeft(): IBinaryNodeInterface;
+        setLeft(left: IBinaryNodeInterface): IBinaryNodeInterface;
+        getRight(): IBinaryNodeInterface;
+        setRight(right: IBinaryNodeInterface): IBinaryNodeInterface;
+
+        // extend interface implementations overide
         getParent(): IBinaryNodeInterface;
         setParent(parent: IBinaryNodeInterface): IBinaryNodeInterface;
 
         add(node: IBinaryNodeInterface): IBinaryNodeInterface;
+        remove(node: IBinaryNodeInterface): IBinaryNodeInterface;
+        search(node: IBinaryNodeInterface): IBinaryNodeInterface;
         compare(node: IBinaryNodeInterface): number;
         children(): IBinaryNodeInterface[];
         hasChildren(): boolean;
-        search(node: IBinaryNodeInterface): IBinaryNodeInterface;
 
         inOrder(items: List<IBinaryNodeInterface>): List<IBinaryNodeInterface>;
         preOrder(items: List<IBinaryNodeInterface>): List<IBinaryNodeInterface>;
         postOrder(items: List<IBinaryNodeInterface>): List<IBinaryNodeInterface>;
         leverOrder(items: List<IBinaryNodeInterface>): List<IBinaryNodeInterface>;
-
-        getLeft(): IBinaryNodeInterface;
-        setLeft(left: IBinaryNodeInterface): IBinaryNodeInterface;
-        getRight(): IBinaryNodeInterface;
-        setRight(right: IBinaryNodeInterface): IBinaryNodeInterface;
     }
 
     export abstract class AbstractBinaryNode extends AbstractNode implements IBinaryNodeInterface {
-       
-        private left: IBinaryNodeInterface = null;
-        private right: IBinaryNodeInterface = null;
+
+        public constructor() {
+            super();
+            this.setDescendants([null, null]);
+        }
 
         public getParent(): IBinaryNodeInterface {
             return <IBinaryNodeInterface>super.getParent();
@@ -36,34 +41,27 @@ module DataStructures.Tree {
         }
 
         public getLeft(): IBinaryNodeInterface {
-            return this.left;
+            return <IBinaryNodeInterface>this.getDescendant(0);
         }
 
         public setLeft(left: IBinaryNodeInterface): IBinaryNodeInterface {
-            this.left = left;
-            return this;
+            return <IBinaryNodeInterface>this.setDescendant(0, left);
         }
 
         public getRight(): IBinaryNodeInterface {
-            return this.right;
+            return <IBinaryNodeInterface>this.getDescendant(1);
         }
 
         public setRight(right: IBinaryNodeInterface): IBinaryNodeInterface {
-            this.right = right;
-            return this;
+            return <IBinaryNodeInterface>this.setDescendant(1, right);
         }
 
         public children(): IBinaryNodeInterface[] {
-            return [this.getLeft(), this.getRight()];
+            return <IBinaryNodeInterface[]>super.children();
         }
 
         public compare(node: IBinaryNodeInterface): number {
-            /*
-               -1: this is less than node
-                0: this is equal node
-                1: this is greather than node
-            */
-            throw new Error("This method is abstract");
+            return super.compare(node);
         }
 
         public add(node: IBinaryNodeInterface): IBinaryNodeInterface {
@@ -97,6 +95,17 @@ module DataStructures.Tree {
             }
         }
 
+        public remove(node: IBinaryNodeInterface): IBinaryNodeInterface {
+            //var removeNode: IBinaryNodeInterface = this.search(node);
+            //var nodeLeft: IBinaryNodeInterface = removeNode.getLeft();
+            //var nodeRight: IBinaryNodeInterface = removeNode.getRight();
+            //nodeLeft.setParent(removeNode.getParent());
+            //nodeLeft.add(nodeRight);
+            //return removeNode;
+
+            return <IBinaryNodeInterface>super.remove(node);
+        }
+
         public inOrder(items: List<IBinaryNodeInterface>): List<IBinaryNodeInterface> {
             return <List<IBinaryNodeInterface>>super.leverOrder(items);
         }
@@ -114,35 +123,88 @@ module DataStructures.Tree {
         }
     }
 
-    export class BinaryTree extends AbstractTree implements ITreeInterface {
+    export class BinaryTree extends AbstractTree implements ITreeInterface, IBinaryNodeInterface {
         constructor() {
             super();
+        }
+
+        ///interface implementation and parent typing ovveride
+        public getLeft(): IBinaryNodeInterface {
+            if (this.getRoot() !== null) {
+                return this.getRoot().getLeft();
+            }
+            return null;
+        }
+
+        public setLeft(node: IBinaryNodeInterface): BinaryTree {
+            if (this.getRoot() !== null) {
+                this.getRoot().setLeft(node);
+            }
+
+            return this;
+        }
+
+        public getRight(): IBinaryNodeInterface {
+            if (this.getRoot() !== null) {
+                return this.getRoot().getRight();
+            }
+            return null;
+        }
+
+        public setRight(node: IBinaryNodeInterface): BinaryTree {
+            if (this.getRoot() !== null) {
+                this.getRoot().setRight(node);
+            }
+
+            return this;
+        }
+
+        public getParent(): IBinaryNodeInterface {
+            return <IBinaryNodeInterface>super.getParent();
+        }
+
+        public setParent(node: IBinaryNodeInterface): BinaryTree {
+            return <BinaryTree>super.setParent(node);
         }
 
         public getRoot(): IBinaryNodeInterface {
             return <IBinaryNodeInterface>super.getRoot();
         }
 
-        public setRoot(root: IBinaryNodeInterface) : BinaryTree {
-            return <BinaryTree>super.setRoot(root);
+        public setRoot(root: IBinaryNodeInterface, clearParent: boolean = true): BinaryTree {
+            return <BinaryTree>super.setRoot(root, clearParent);
         }
 
-        public addNode(node: IBinaryNodeInterface): BinaryTree {
-            return <BinaryTree>super.addNode(node);
+        public add(node: IBinaryNodeInterface): BinaryTree {
+            return <BinaryTree>super.add(node);
         }
 
-        public removeNode(node: IBinaryNodeInterface): IBinaryNodeInterface {
-            var removeNode: IBinaryNodeInterface = this.searchNode(node);
-            var children: IBinaryNodeInterface[] = removeNode.children();
-            var nodeLeft: IBinaryNodeInterface = children[0];
-            var nodeRight: IBinaryNodeInterface = children[1];
-            nodeLeft.setParent(removeNode.getParent());
-            nodeLeft.add(nodeRight);
-            return removeNode;
+        public remove(node: IBinaryNodeInterface): IBinaryNodeInterface {
+            return <IBinaryNodeInterface>super.remove(node);
         }
 
-        public searchNode(node: IBinaryNodeInterface): IBinaryNodeInterface {
-            return <IBinaryNodeInterface>super.searchNode(node);
+        public search(node: IBinaryNodeInterface): IBinaryNodeInterface {
+            return <IBinaryNodeInterface>super.search(node);
+        }
+
+        public children(): IBinaryNodeInterface[] {
+            return <IBinaryNodeInterface[]>super.children();
+        }
+
+        public inOrder(result: List<IBinaryNodeInterface>): List<IBinaryNodeInterface> {
+            return <List<IBinaryNodeInterface>>super.inOrder(result);
+        }
+
+        public preOrder(result: List<IBinaryNodeInterface>): List<IBinaryNodeInterface> {
+            return <List<IBinaryNodeInterface>>super.preOrder(result);
+        }
+
+        public postOrder(result: List<IBinaryNodeInterface>): List<IBinaryNodeInterface> {
+            return <List<IBinaryNodeInterface>>super.postOrder(result);
+        }
+
+        public leverOrder(result: List<IBinaryNodeInterface>): List<IBinaryNodeInterface> {
+            return <List<IBinaryNodeInterface>>super.leverOrder(result);
         }
     }
 }
