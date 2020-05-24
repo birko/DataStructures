@@ -1,37 +1,17 @@
-var __extends = (this && this.__extends) || function (d, b) {
-    for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
-    function __() { this.constructor = d; }
-    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
-};
 "use strict";
+var __extends = (this && this.__extends) || (function () {
+    var extendStatics = Object.setPrototypeOf ||
+        ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
+        function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+    return function (d, b) {
+        extendStatics(d, b);
+        function __() { this.constructor = d; }
+        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+    };
+})();
 var DataStructures;
 (function (DataStructures) {
     "use strict";
-    var KeyValuePair = (function () {
-        function KeyValuePair(key, value) {
-            this.key = null;
-            this.value = null;
-            this
-                .setKey(key)
-                .setValue(value);
-        }
-        KeyValuePair.prototype.getKey = function () {
-            return this.key;
-        };
-        KeyValuePair.prototype.setKey = function (key) {
-            this.key = key;
-            return this;
-        };
-        KeyValuePair.prototype.getValue = function () {
-            return this.value;
-        };
-        KeyValuePair.prototype.setValue = function (value) {
-            this.value = value;
-            return this;
-        };
-        return KeyValuePair;
-    }());
-    DataStructures.KeyValuePair = KeyValuePair;
     var List = (function () {
         function List() {
             this.values = [];
@@ -134,10 +114,39 @@ var DataStructures;
         return List;
     }());
     DataStructures.List = List;
+})(DataStructures || (DataStructures = {}));
+var DataStructures;
+(function (DataStructures) {
+    "use strict";
+    var KeyValuePair = (function () {
+        function KeyValuePair(key, value) {
+            this.key = null;
+            this.value = null;
+            this
+                .setKey(key)
+                .setValue(value);
+        }
+        KeyValuePair.prototype.getKey = function () {
+            return this.key;
+        };
+        KeyValuePair.prototype.setKey = function (key) {
+            this.key = key;
+            return this;
+        };
+        KeyValuePair.prototype.getValue = function () {
+            return this.value;
+        };
+        KeyValuePair.prototype.setValue = function (value) {
+            this.value = value;
+            return this;
+        };
+        return KeyValuePair;
+    }());
+    DataStructures.KeyValuePair = KeyValuePair;
     var Dictionary = (function () {
         function Dictionary() {
-            this.values = new List();
-            this.keys = new List();
+            this.values = new DataStructures.List();
+            this.keys = new DataStructures.List();
         }
         Dictionary.prototype.getKeysList = function () {
             if (this.keys === undefined || this.keys === null) {
@@ -164,8 +173,8 @@ var DataStructures;
             });
         };
         Dictionary.prototype.clear = function () {
-            this.values = new List();
-            this.keys = new List();
+            this.values = new DataStructures.List();
+            this.keys = new DataStructures.List();
             return this;
         };
         Dictionary.prototype.getLength = function () {
@@ -173,6 +182,24 @@ var DataStructures;
         };
         Dictionary.prototype.containsKey = function (key) {
             return this.getKeys().indexOf(key) >= 0;
+        };
+        Dictionary.prototype.setItems = function (items) {
+            if (items !== undefined && items !== null && items.length > 0) {
+                var length = items.length;
+                for (var i = 0; i < length; i++) {
+                    var item = items[i];
+                    if (item != null) {
+                        return this.set(item.getKey(), item.getValue());
+                    }
+                }
+            }
+            return this;
+        };
+        Dictionary.prototype.setItem = function (item) {
+            if (item != null) {
+                return this.set(item.getKey(), item.getValue());
+            }
+            return this;
         };
         Dictionary.prototype.set = function (key, value) {
             if (!this.containsKey(key)) {
@@ -205,44 +232,11 @@ var DataStructures;
         return Dictionary;
     }());
     DataStructures.Dictionary = Dictionary;
-    var AbstractFactory = (function () {
-        function AbstractFactory() {
-            this.data = new DataStructures.Dictionary();
-        }
-        AbstractFactory.prototype.getData = function () {
-            if (this.data === null || this.data === undefined) {
-                this.clear();
-            }
-            return this.data;
-        };
-        AbstractFactory.prototype.hasData = function () {
-            return this.getData().getLength() > 0;
-        };
-        AbstractFactory.prototype.getItems = function () {
-            return this.getData().getValues();
-        };
-        AbstractFactory.prototype.clear = function () {
-            this.data = new DataStructures.Dictionary();
-            return this;
-        };
-        AbstractFactory.prototype.set = function (name, agent) {
-            this.getData().set(name, agent);
-            return this;
-        };
-        AbstractFactory.prototype.has = function (name) {
-            return (this.getData().containsKey(name));
-        };
-        AbstractFactory.prototype.get = function (name) {
-            return this.getData().get(name);
-        };
-        AbstractFactory.prototype.remove = function (name) {
-            return this.getData().remove(name);
-        };
-        return AbstractFactory;
-    }());
-    DataStructures.AbstractFactory = AbstractFactory;
 })(DataStructures || (DataStructures = {}));
-"use strict";
+var DataStructures;
+(function (DataStructures) {
+    "use strict";
+})(DataStructures || (DataStructures = {}));
 var DataStructures;
 (function (DataStructures) {
     var Tree;
@@ -544,7 +538,6 @@ var DataStructures;
         Tree.AbstractTree = AbstractTree;
     })(Tree = DataStructures.Tree || (DataStructures.Tree = {}));
 })(DataStructures || (DataStructures = {}));
-"use strict";
 var DataStructures;
 (function (DataStructures) {
     var Tree;
@@ -704,7 +697,6 @@ var DataStructures;
         Tree.BinaryTree = BinaryTree;
     })(Tree = DataStructures.Tree || (DataStructures.Tree = {}));
 })(DataStructures || (DataStructures = {}));
-"use strict";
 var DataStructures;
 (function (DataStructures) {
     var Tree;
@@ -880,5 +872,45 @@ var DataStructures;
         }(Tree.BinaryTree));
         Tree.PairingHeap = PairingHeap;
     })(Tree = DataStructures.Tree || (DataStructures.Tree = {}));
+})(DataStructures || (DataStructures = {}));
+var DataStructures;
+(function (DataStructures) {
+    "use strict";
+    var AbstractFactory = (function () {
+        function AbstractFactory() {
+            this.data = new DataStructures.Dictionary();
+        }
+        AbstractFactory.prototype.getData = function () {
+            if (this.data === null || this.data === undefined) {
+                this.clear();
+            }
+            return this.data;
+        };
+        AbstractFactory.prototype.hasData = function () {
+            return this.getData().getLength() > 0;
+        };
+        AbstractFactory.prototype.getItems = function () {
+            return this.getData().getValues();
+        };
+        AbstractFactory.prototype.clear = function () {
+            this.data = new DataStructures.Dictionary();
+            return this;
+        };
+        AbstractFactory.prototype.set = function (name, agent) {
+            this.getData().set(name, agent);
+            return this;
+        };
+        AbstractFactory.prototype.has = function (name) {
+            return (this.getData().containsKey(name));
+        };
+        AbstractFactory.prototype.get = function (name) {
+            return this.getData().get(name);
+        };
+        AbstractFactory.prototype.remove = function (name) {
+            return this.getData().remove(name);
+        };
+        return AbstractFactory;
+    }());
+    DataStructures.AbstractFactory = AbstractFactory;
 })(DataStructures || (DataStructures = {}));
 //# sourceMappingURL=datastructures.js.map

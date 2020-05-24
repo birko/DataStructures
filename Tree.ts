@@ -41,7 +41,6 @@ module DataStructures.Tree {
                 1: this is greather than parameter node
             */
             if (node !== null) {
-                
                 throw new Error("Comparasion must be implemented");
             }
             return 1;
@@ -252,7 +251,7 @@ module DataStructures.Tree {
             if (this.getRoot() !== null) {
                 this.getRoot().setParent(node);
             }
-            
+
             return this;
         }
 
@@ -294,7 +293,7 @@ module DataStructures.Tree {
                             if (children[i] !== null) {
                                 this.getRoot().add(children[i]);
                             }
-                        }                        
+                        }
                     }
                 } else {
                     removeNode = this.getRoot().remove(node);

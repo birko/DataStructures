@@ -1,19 +1,4 @@
 declare module DataStructures {
-    interface IComparable {
-        compare(item: IComparable): number;
-    }
-    interface IAssocArray<TValue> {
-        [index: string]: TValue;
-    }
-    class KeyValuePair<TKey, TValue> {
-        private key;
-        private value;
-        constructor(key: TKey, value: TValue);
-        getKey(): TKey;
-        setKey(key: TKey): KeyValuePair<TKey, TValue>;
-        getValue(): TValue;
-        setValue(value: TValue): KeyValuePair<TKey, TValue>;
-    }
     class List<TValue> {
         private values;
         getValues(): TValue[];
@@ -36,6 +21,17 @@ declare module DataStructures {
         shift(): List<TValue>;
         pop(): List<TValue>;
     }
+}
+declare module DataStructures {
+    class KeyValuePair<TKey, TValue> {
+        private key;
+        private value;
+        constructor(key: TKey, value: TValue);
+        getKey(): TKey;
+        setKey(key: TKey): KeyValuePair<TKey, TValue>;
+        getValue(): TValue;
+        setValue(value: TValue): KeyValuePair<TKey, TValue>;
+    }
     class Dictionary<TKey, TValue> {
         private values;
         private keys;
@@ -47,20 +43,23 @@ declare module DataStructures {
         clear(): Dictionary<TKey, TValue>;
         getLength(): number;
         containsKey(key: TKey): boolean;
+        setItems(items: KeyValuePair<TKey, TValue>[]): Dictionary<TKey, TValue>;
+        setItem(item: KeyValuePair<TKey, TValue>): Dictionary<TKey, TValue>;
         set(key: TKey, value: TValue): Dictionary<TKey, TValue>;
         get(key: TKey): TValue;
         remove(key: TKey): TValue;
     }
-    class AbstractFactory<TValue> {
-        private data;
-        getData(): DataStructures.Dictionary<string, TValue>;
-        hasData(): boolean;
-        getItems(): TValue[];
-        clear(): AbstractFactory<TValue>;
-        set(name: string, agent: TValue): AbstractFactory<TValue>;
-        has(name: string): boolean;
-        get(name: string): TValue;
-        remove(name: string): TValue;
+}
+declare module DataStructures {
+    interface ISerializeToObject {
+        serialize(): any;
+        deserialize(object: any): void;
+    }
+    interface IComparable {
+        compare(item: IComparable): number;
+    }
+    interface IAssocArray<TValue> {
+        [index: string]: TValue;
     }
 }
 declare module DataStructures.Tree {
@@ -253,5 +252,18 @@ declare module DataStructures.Tree {
         preOrder(result: List<IPairingHeapNodeInterface>): List<IPairingHeapNodeInterface>;
         postOrder(result: List<IPairingHeapNodeInterface>): List<IPairingHeapNodeInterface>;
         leverOrder(result: List<IPairingHeapNodeInterface>): List<IPairingHeapNodeInterface>;
+    }
+}
+declare module DataStructures {
+    class AbstractFactory<TValue> {
+        private data;
+        getData(): Dictionary<string, TValue>;
+        hasData(): boolean;
+        getItems(): TValue[];
+        clear(): AbstractFactory<TValue>;
+        set(name: string, agent: TValue): AbstractFactory<TValue>;
+        has(name: string): boolean;
+        get(name: string): TValue;
+        remove(name: string): TValue;
     }
 }
